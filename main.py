@@ -1,6 +1,6 @@
 from data import db_session
-from data.models import User
-
+from data.models import User, Jobs
+import datetime
 
 db_session.global_init("db/mars_explorer.sqlite")
 
@@ -50,4 +50,14 @@ user.speciality = "spaceship pilot"
 user.address = "module_2"
 user.email = "pilot@mars.org"
 db_sess.add(user)
+db_sess.commit()
+
+job = Jobs()
+job.team_leader = 1
+job.job = "deployment of residential modules 1 and 2"
+job.work_size = 15
+job.collaborators = "2, 3"
+job.start_date = datetime.datetime.now()
+job.is_finished = False
+db_sess.add(job)
 db_sess.commit()

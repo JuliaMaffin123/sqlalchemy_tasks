@@ -2,7 +2,7 @@ import datetime
 import sqlalchemy as sa
 
 from .db_session import ORMBase
-from sqlalchemy import orm
+from sqlalchemy.orm import relationship
 
 
 class User(ORMBase):
@@ -21,7 +21,7 @@ class User(ORMBase):
     hashed_password = sa.Column(sa.String, nullable=True)
     modified_date = sa.Column(sa.DateTime, default=datetime.datetime.now)
 
-    team_lead = orm.relation("Jobs", back_populates='user')
+    team_lead = relationship("Jobs", back_populates="parent")
 
 
 class Jobs(ORMBase):
@@ -38,4 +38,5 @@ class Jobs(ORMBase):
     end_date = sa.Column(sa.DateTime, nullable=True)
     is_finished = sa.Column(sa.Boolean, nullable=True)
 
-    user = orm.relation('User')
+    parent = relationship("User", back_populates="team_lead")
+
